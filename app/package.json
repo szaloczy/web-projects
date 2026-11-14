@@ -1,0 +1,26 @@
+{
+  "name": "kitchen-sink",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "clean": "turbo run clean",
+    "dev": "turbo run dev --ui stream",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "check-types": "turbo run check-types"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.0",
+    "tsc-alias": "^1.8.16",
+    "turbo": "^2.6.1"
+  },
+  "packageManager": "pnpm@8.15.6",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.90.7",
+    "zod": "^3.22.3"
+  }
+}
