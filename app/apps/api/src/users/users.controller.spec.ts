@@ -39,15 +39,17 @@ describe('UsersController', () => {
       const mockUsers: UserDetailsDto[] = [
         {
           id: 1,
-          name: 'John Doe',
+          firstName: 'John',
+          lastName: 'Doe',
           capitalizedName: 'JOHN DOE',
           createdAt: new Date('2024-01-01'),
           updatedAt: new Date('2024-01-01'),
         },
         {
           id: 2,
-          name: 'Jane Smith',
-          capitalizedName: 'JANE SMITH',
+          firstName: 'Jane',
+          lastName: 'Doe',
+          capitalizedName: 'JANE DOE',
           createdAt: new Date('2024-01-02'),
           updatedAt: new Date('2024-01-02'),
         },
@@ -76,7 +78,8 @@ describe('UsersController', () => {
     it('should return a user by id', async () => {
       const mockUser: UserDetailsDto = {
         id: 1,
-        name: 'John Doe',
+        firstName: 'John',
+        lastName: 'Doe',
         capitalizedName: 'JOHN DOE',
         createdAt: new Date('2024-01-01'),
         updatedAt: new Date('2024-01-01'),
@@ -107,10 +110,11 @@ describe('UsersController', () => {
 
   describe('add', () => {
     it('should create a new user', async () => {
-      const createUserDto: CreateUserDto = { name: 'John Doe' };
+      const createUserDto: CreateUserDto = { firstName: 'John', lastName: 'Doe' };
       const mockCreatedUser: UserDetailsDto = {
         id: 1,
-        name: 'John Doe',
+        firstName: 'John',
+        lastName: 'Doe',
         capitalizedName: 'JOHN DOE',
         createdAt: new Date('2024-01-01'),
         updatedAt: new Date('2024-01-01'),
@@ -126,11 +130,12 @@ describe('UsersController', () => {
     });
 
     it('should create a user with different name', async () => {
-      const createUserDto: CreateUserDto = { name: 'Jane Smith' };
+      const createUserDto: CreateUserDto = { firstName: 'Jane', lastName: 'Doe' };
       const mockCreatedUser: UserDetailsDto = {
         id: 2,
-        name: 'Jane Smith',
-        capitalizedName: 'JANE SMITH',
+        firstName: 'Jane',
+        lastName: 'Doe',
+        capitalizedName: 'JANE DOE',
         createdAt: new Date('2024-01-02'),
         updatedAt: new Date('2024-01-02'),
       };

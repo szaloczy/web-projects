@@ -23,7 +23,7 @@ describe('UsersController (e2e)', () => {
 
   describe('POST /users', () => {
     it('should create a new user', () => {
-      const createUserDto = { name: 'John Doe' };
+      const createUserDto = { firstname: 'John', lastName: 'Doe' };
 
       return request(testApp.app.getHttpServer())
         .post('/users')
@@ -31,7 +31,8 @@ describe('UsersController (e2e)', () => {
         .expect(201)
         .expect((res) => {
           expect(res.body).toHaveProperty('id');
-          expect(res.body).toHaveProperty('name', 'John Doe');
+          expect(res.body).toHaveProperty('firstName', 'John');
+          expect(res.body).toHaveProperty('lastName', 'Doe');
           expect(res.body).toHaveProperty('capitalizedName', 'JOHN DOE');
           expect(res.body).toHaveProperty('createdAt');
           expect(res.body).toHaveProperty('updatedAt');
@@ -41,8 +42,8 @@ describe('UsersController (e2e)', () => {
         });
     });
 
-    it('should reject creation with empty name', () => {
-      const createUserDto = { name: '' };
+    it('should reject creation with empty first and last name', () => {
+      const createUserDto = { firstName: '', lastName: '' };
 
       return request(testApp.app.getHttpServer())
         .post('/users')
@@ -70,10 +71,17 @@ describe('UsersController (e2e)', () => {
         .expect(400);
     });
 
-    it('should reject creation with invalid name type', () => {
+    it('should reject creation with invalid first name type', () => {
       return request(testApp.app.getHttpServer())
         .post('/users')
-        .send({ name: 123 })
+        .send({ firstName: 123 })
+        .expect(400);
+    });
+
+    it('should reject creation with invalid last name type', () => {
+      return request(testApp.app.getHttpServer())
+        .post('/users')
+        .send({ lastName: 123 })
         .expect(400);
     });
   });
@@ -90,7 +98,7 @@ describe('UsersController (e2e)', () => {
       // Create test users
       await testApp.db
         .insert(schema.users)
-        .values([{ name: 'Alice Smith' }, { name: 'Bob Johnson' }]);
+        .values([{ firstName: 'Alice', lastName: 'Doe' }, { firstName: 'Bob', lastName:'Johnson' }]);
 
       return request(testApp.app.getHttpServer())
         .get('/users')
@@ -99,7 +107,8 @@ describe('UsersController (e2e)', () => {
           expect(Array.isArray(res.body)).toBe(true);
           expect(res.body.length).toBe(2);
           expect(res.body[0]).toHaveProperty('id');
-          expect(res.body[0]).toHaveProperty('name');
+          expect(res.body[0]).toHaveProperty('firstName');
+          expect(res.body[0]).toHaveProperty('lastName');
           expect(res.body[0]).toHaveProperty('capitalizedName');
           expect(res.body[0]).toHaveProperty('createdAt');
           expect(res.body[0]).toHaveProperty('updatedAt');
@@ -109,7 +118,7 @@ describe('UsersController (e2e)', () => {
     });
 
     it('should return users in correct format', async () => {
-      await testApp.db.insert(schema.users).values({ name: 'Test User' });
+      await testApp.db.insert(schema.users).values({ firstName: 'Test', lastName:'User' });
 
       return request(testApp.app.getHttpServer())
         .get('/users')
@@ -117,7 +126,8 @@ describe('UsersController (e2e)', () => {
         .expect((res) => {
           expect(res.body[0]).toMatchObject({
             id: expect.any(Number),
-            name: 'Test User',
+            firstName: 'Test',
+            lastNAME: 'User',
             capitalizedName: 'TEST USER',
             createdAt: expect.any(String),
             updatedAt: expect.any(String),
@@ -130,7 +140,7 @@ describe('UsersController (e2e)', () => {
     it('should return a user by id', async () => {
       const [user] = await testApp.db
         .insert(schema.users)
-        .values({ name: 'Jane Doe' })
+        .values({ firstName: 'Jane', lastName: 'Doe' })
         .returning();
 
       return request(testApp.app.getHttpServer())
@@ -139,7 +149,8 @@ describe('UsersController (e2e)', () => {
         .expect((res) => {
           expect(res.body).toMatchObject({
             id: user.id,
-            name: 'Jane Doe',
+            firstName: 'Jane',
+            lastName: 'Doe',
             capitalizedName: 'JANE DOE',
             createdAt: expect.any(String),
             updatedAt: expect.any(String),
