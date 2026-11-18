@@ -1,5 +1,5 @@
 import { UserRow } from '../server/db/schema';
-import { UserDetailsDto } from './dto/user.dto';
+import { UserDetailsDto, UserNameDetailsDto } from './dto/user.dto';
 import { mapDto } from 'src/utils/map-dto';
 
 export function toUserDetailsDto(row: UserRow) {
@@ -10,6 +10,14 @@ export function toUserDetailsDto(row: UserRow) {
     // this property will be stripped by the mapper
     additionalProperty: 'additional value',
   });
+}
+
+export function toUserNamesDetailsDto(row: UserRow) {
+  return mapDto(UserNameDetailsDto, {
+    firstName: row.firstName,
+    lastName: row.lastName,
+    fullName: `${row.firstName} ${row.lastName}`
+  })
 }
 
 // Example this would throw 422 error due to validation errors

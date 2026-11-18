@@ -1,8 +1,8 @@
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
-import { eq } from 'drizzle-orm';
+import { eq, SQL } from 'drizzle-orm';
 import { users } from '../server/db/schema';
 import type { Database } from '../server/db';
-import { UserDetailsDto } from './dto/user.dto';
+import { UserDetailsDto, UserNameDetailsDto } from './dto/user.dto';
 import { CreateUserDto } from './dto/user.dto';
 import { toUserDetailsDto } from './user.mapper';
 
@@ -27,6 +27,12 @@ export class UsersService {
     }
 
     return toUserDetailsDto(result[0]);
+  }
+  
+  async findNames(query: FindNamesQueryDto): Promise<UserNameDetailsDto> {
+    const conditions: SQL[] = [];
+
+    if ()
   }
 
   async create(data: CreateUserDto): Promise<UserDetailsDto> {

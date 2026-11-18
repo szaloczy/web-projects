@@ -40,4 +40,24 @@ export class UserDetailsDto extends UserBaseDto {
   capitalizedName: string;
 }
 
+export class UserNameDetailsDto {
+  @Expose()
+  @ApiProperty({example: 'John'})
+  @IsString()
+  @MinLength(1)
+  firstName: string;
+
+  @Expose()
+  @ApiProperty({example: 'Doe'})
+  @IsString()
+  @MinLength(1)
+  lastName: string;
+
+  @Expose()
+  @ApiProperty({example: 'John Doe'})
+  @IsString()
+  @MinLength(1)
+  fullName: string;
+}
+
 export class CreateUserDto extends PickType(UserBaseDto, ['firstName', 'lastName'] as const) {}
