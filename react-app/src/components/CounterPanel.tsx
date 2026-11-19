@@ -6,10 +6,11 @@ function CounterPanel() {
     const [count, setCount] = useState(0);
 
     return (
-        <>
+        <> 
             <CounterDisplay count={count}/>
-            <CounterButton label="Increment" onClick={() => setCount(count + 1)}></CounterButton>
-            <CounterButton label="  Reset" onClick={() => setCount(0)}></CounterButton>
+            <CounterButton label="Increment" onClick={() => setCount(count + 1)}/>
+            <CounterButton label="Reset" onClick={() => setCount(0)}/>
+            { count > 10 && <p>Thats a lot of click</p>}
         </>
     )
 }
