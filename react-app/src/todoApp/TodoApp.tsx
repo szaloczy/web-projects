@@ -17,15 +17,22 @@ function TodoApp() {
         setText('');
     }
 
+    function deleteTodo(id: number) {
+        setTodos(todos.filter((todo) => todo.id === id))
+    }
+
     return (
         <>
             <ul>
                 {
-                    todos.map((todo) => <li key={todo.id}>{todo.text}</li>)
+                    todos.map((todo) => <li key={todo.id}>{todo.text}<button onClick={() => deleteTodo(todo.id)}>delete</button></li>)
                 }
             </ul>
-            <input onChange={(e) => setText(e.target.value)} value={text} type="text" />
-            <button onClick={createTodo}>Add</button>
+            <form>
+                <input onChange={(e) => setText(e.target.value)} value={text} type="text" />
+                <button onClick={createTodo}>Add</button>
+            </form>
+           
         </>
     )
 
